@@ -1,16 +1,20 @@
-import React, { useState, useContext } from "react";
-import { loggedIn } from "../Contexts/loggedIn";
+import React, { useState } from "react";
+import { atom, useRecoilState } from 'recoil';
 import SendMessage from "./SendMessage";
 import StaffLogin from "./StaffLogin";
 import ViewMessage from "./ViewMessages";
+import { isLoggedInState } from "../atoms";
 
 export default function Header({ fixed }) {
   
+
+
   const [staff, setStaff] = useState({account: ""});
   const [error, setError] = useState("");
-  const {isLoggedIn, setIsLoggedIn} = useContext(loggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
   function Login(details, response) {
+    
     if (details.account === response.data.account && details.password === response.data.password) {
       setStaff({
         account: details.account,

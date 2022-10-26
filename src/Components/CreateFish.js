@@ -1,11 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
+import { useRecoilState } from 'recoil';
+import { reloaderState } from '../atoms';
 
 export default function CreateFish() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [reloder, setReloader] = useRecoilState(reloaderState)
 
   const [name, setName] = useState('');
   const [scientific, setScientific] = useState('');
@@ -22,13 +26,13 @@ export default function CreateFish() {
     }})
       .then((response) => {
         console.log(response.data);
+        
       })
       .catch(error => {
         console.log(error)
       });
-      setName('');
-      setScientific('');
-      setRegion('');
+    
+      setReloader((reloader) => reloader + 1);
     }
 
   return (

@@ -14,12 +14,6 @@ export default function SendMessage() {
   const [message, setMessage] = useState('');
   
   const addMessage = (name, email, title, message) => {
-    const data = JSON.stringify({
-      name: name,
-      email: email,
-      title: title,
-      details: message,
-    })
     axios
       .post('http://127.0.0.1:8000/add_message/', {data: {
         name: name,
