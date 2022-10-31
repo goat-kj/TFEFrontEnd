@@ -16,6 +16,7 @@
     "react-hooks-global-state": "^2.0.0",
     "react-redux": "^8.0.4",
     "react-scripts": "5.0.1",
+    "react-widgets": "^5.8.4",
     "recoil": "^0.7.6",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"

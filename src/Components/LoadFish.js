@@ -44,7 +44,7 @@ function LoadFish({regionName, regionId}) {
           show={show}
           onHide={handleClose}
           backdrop="static"
-          keyboard={false}>
+          keyboard={false}>  
           <Modal.Header closeButton>
             <Modal.Title>{regionName}</Modal.Title>
           </Modal.Header>
@@ -61,7 +61,10 @@ function LoadFish({regionName, regionId}) {
                                   id={item.id}
                                   name={item.name}
                                   scientific={item.scientific}
-                                  region={item.region} />
+                                  region={item.region}
+                                  image={item.image}
+                                  types={item.types}
+                                  sizes={item.sizes} />
                             </li>
                         );
                       } else {
@@ -73,7 +76,10 @@ function LoadFish({regionName, regionId}) {
                                     id={item.id}
                                     name={item.name}
                                     scientific={item.scientific}
-                                    region={item.region} />
+                                    region={item.region}
+                                    image={item.image}
+                                    types={item.types}
+                                    sizes={item.sizes} />
                               </li>
                           );
                         }
