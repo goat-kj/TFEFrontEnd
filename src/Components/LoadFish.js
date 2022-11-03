@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios'
 import CreateFish from './CreateFish';
@@ -13,26 +13,40 @@ function LoadFish({regionName, regionId}) {
   
   const reloader = useRecoilValue(reloaderState)
 
-
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true)
+    
   };
   
   const isLoggedIn = useRecoilValue(isLoggedInState);
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:8000/fish_all/?format=json')
-      .then(response => {
-        setPosts(response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },[reloader])
+    .get('http://127.0.0.1:8000/fish_all/?format=json')
+    .then(response => {
+      setPosts(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },[posts])
 
+  const [filteredList, setFilteredList] = useState([])
+  const [selectedCategory, setSeletctedCategory] = useState()
+  
+  useEffect(() => {
+    setFilteredList(posts)
+  },[])
 
+  function getFilteredList() {
+    if (selectedCategory == "All" || !selectedCategory) {
+      return posts
+    }
+    return posts.filter((post) => post.types == selectedCategory)
+  }
+
+  const filteredFish = useMemo(getFilteredList, [selectedCategory, filteredList])  
 
   return (
       <>
@@ -45,18 +59,29 @@ function LoadFish({regionName, regionId}) {
           onHide={handleClose}
           backdrop="static"
           keyboard={false}>  
-          <Modal.Header closeButton>
+          <Modal.Header  closeButton>
             <Modal.Title>{regionName}</Modal.Title>
+            <select className="w-1/3 absolute right-12 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+            id="filters"
+            value={selectedCategory}
+            onChange={(e) => {setSeletctedCategory(e.target.value)}}>
+              <option value={"All"}>All</option>
+              <option value={"Livebearers"}>Livebearers</option>
+              <option value={"Minnows"}>Minnows</option>
+              <option value={"Cichlids"}>Cichlids</option>
+              <option value={"Catfish"}>Catfish</option>
+              <option value={"Labyrinth"}>Labyrinth</option>
+              <option value={"Oddballs"}>Oddballs</option>
+            </select>
           </Modal.Header>
           <Modal.Body>
               <div>
                 <div>
-                  <ul>
-                  {posts.map((item) => {
+                  {filteredFish.map((item) => {
                       if (regionId === 0) {
                         return (
-                            <li key={item.id}
-                                className='p-2'>
+                            <div key={item.id}
+                                className='py-2'>
                                 <FishCard
                                   id={item.id}
                                   name={item.name}
@@ -65,12 +90,12 @@ function LoadFish({regionName, regionId}) {
                                   image={item.image}
                                   types={item.types}
                                   sizes={item.sizes} />
-                            </li>
+                            </div>
                         );
                       } else {
                         if (item.region === regionId) {
                           return (
-                              <li key={item.id}
+                              <div key={item.id}
                                   className='p-2'>
                                   <FishCard
                                     id={item.id}
@@ -80,13 +105,12 @@ function LoadFish({regionName, regionId}) {
                                     image={item.image}
                                     types={item.types}
                                     sizes={item.sizes} />
-                              </li>
+                              </div>
                           );
                         }
                         return null;
                       }
                     })}
-                  </ul>
                 </div>
               </div>
           </Modal.Body>

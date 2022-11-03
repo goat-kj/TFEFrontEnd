@@ -46,14 +46,12 @@ export default function ViewMessage() {
           <Modal.Body>
               <div>
                 <div>
-                  <ul>
                     {posts.map(item => (
-                      <li key={item.id}
+                      <div key={item.id}
                           className='p-2'>
                           <MessageCard id={item.id} name={item.name} email={item.email} title={item.title} details={item.details}/>
-                      </li>
+                      </div>
                     ))}
-                  </ul>
                 </div>
               </div>
           </Modal.Body>

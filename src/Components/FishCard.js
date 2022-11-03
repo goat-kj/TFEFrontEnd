@@ -35,23 +35,21 @@ export default function FishCard({id, name, scientific, region, image, types, si
     <div className="w-full">
           <div className="block p-3 rounded-lg shadow-lg bg-white ">
             
-              <div>
-                <img className="px-2 py-3 max-w-30px max-h-30px" src={image} alt="Image missing."></img>
+              <div className="relative h-0 pt-2/3">
+              <img className="py-2 absolute inset-0 w-full h-full object-cover" src={image} alt="Image missing."></img>
               </div>
               <div>
                 <h5 className="text-gray-900 text-xl leading-tight font-medium mb-2">{name}</h5>
                 <p className="text-gray-700 text-base mb-4">
                     Scientific Name: {scientific}
-                </p>
-                <p className="text-gray-700 text-base mb-4">
+                    <br/>
                     Region: {regionString[region]}
-                </p>
-                <p className="text-gray-700 text-base mb-4">
+                    <br/>
                     Type: {types}
-                </p>
-                <p className="text-gray-700 text-base mb-4">
+                    <br/>
                     Size(cm): {sizes}
                 </p>
+
               </div>  
               {(isLoggedIn === true) ? (
               <div className="space-y-1 space-x-1">

@@ -23,9 +23,7 @@ export default function MessageCard({id, name, email, title, details}) {
   }
 
   return (
-        <div className="w-full">
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-              <div className="flex flex-row content-between">
+            <div className="flex flex-row w-full p-3 block rounded-lg shadow-lg bg-white">
                 <div>
                   <h5 className="text-gray-700 text-base mb-4">
                       {title}
@@ -42,12 +40,11 @@ export default function MessageCard({id, name, email, title, details}) {
                 </div>  
                 <button 
                   type="button" 
-                  className="align-left w-min h-min bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="w-min h-min absolute right-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {del(id)}}
                   >X
                 </button>
               </div>
-          </div>  
-        </div>
+       
   )
 };
