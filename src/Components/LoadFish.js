@@ -16,12 +16,6 @@ function LoadFish({regionName, regionId}) {
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true)
-    
-  };
-  
-  const isLoggedIn = useRecoilValue(isLoggedInState);
-
-  useEffect(() => {
     axios
     .get('http://127.0.0.1:8000/fish_all/?format=json')
     .then(response => {
@@ -30,20 +24,22 @@ function LoadFish({regionName, regionId}) {
     .catch(error => {
       console.log(error)
     })
-  },[posts])
+  };
+  
+  const isLoggedIn = useRecoilValue(isLoggedInState);
 
   const [filteredList, setFilteredList] = useState([])
-  const [selectedCategory, setSeletctedCategory] = useState()
+  const [selectedCategory, setSeletctedCategory] = useState("")
   
   useEffect(() => {
     setFilteredList(posts)
-  },[])
+  },[posts])
 
   function getFilteredList() {
     if (selectedCategory == "All" || !selectedCategory) {
       return posts
-    }
-    return posts.filter((post) => post.types == selectedCategory)
+    } else {
+    return posts.filter((post) => post.types == selectedCategory)}
   }
 
   const filteredFish = useMemo(getFilteredList, [selectedCategory, filteredList])  
